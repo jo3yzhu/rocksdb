@@ -11,6 +11,7 @@
 #include <set>
 #include <unordered_set>
 #include <vector>
+#include <iostream>
 
 #include "options/cf_options.h"
 #include "options/db_options.h"
@@ -1007,6 +1008,11 @@ Status OptionTypeInfo::Serialize(const ConfigOptions& config_options,
                                  std::string* opt_value) const {
   // If the option is no longer used in rocksdb and marked as deprecated,
   // we skip it in the serialization.
+  std::cout << "joey start: OptionTypeInfo::Serialize" << std::endl;
+  std::cout << "opt_name" << std::endl;
+  std::cout << opt_name << std::endl;
+  std::cout << "joey end: OptionTypeInfo::Serialize" << std::endl;
+ 
   if (opt_ptr == nullptr || IsDeprecated()) {
     return Status::OK();
   } else if (IsEnabled(OptionTypeFlags::kDontSerialize)) {
@@ -1016,7 +1022,7 @@ Status OptionTypeInfo::Serialize(const ConfigOptions& config_options,
     return serialize_func_(config_options, opt_name, opt_addr, opt_value);
   } else if (IsCustomizable()) {
     const Customizable* custom = AsRawPointer<Customizable>(opt_ptr);
-    opt_value->clear();
+   opt_value->clear();
     if (custom == nullptr) {
       // We do not have a custom object to serialize.
       // If the option is not mutable and we are doing only mutable options,

@@ -15,6 +15,8 @@
 #include "util/coding.h"
 #include "util/string_util.h"
 
+#include <iostream>
+
 namespace ROCKSDB_NAMESPACE {
 
 void Configurable::RegisterOptions(
@@ -473,6 +475,13 @@ Status Configurable::GetOptionString(const ConfigOptions& config_options,
 std::string Configurable::ToString(const ConfigOptions& config_options,
                                    const std::string& prefix) const {
   std::string result = SerializeOptions(config_options, prefix);
+
+  std::cout << "joey begin: Configurable::ToString" << std::endl;
+  std::cout << "result" << std::endl;
+  std::cout << result << std::endl;
+  std::cout << "joey end: Configurable::ToString" << std::endl;
+
+
   if (result.empty() || result.find('=') == std::string::npos) {
     return result;
   } else {
